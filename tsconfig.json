@@ -19,8 +19,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@db/*": ["./src/db/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@emails/*": ["./src/emails/*"],
+      "@tests/*": ["./tests/*"]
+    },
+    "types": ["bun-types"]
   },
   "include": [
     "next-env.d.ts",
