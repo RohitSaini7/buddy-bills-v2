@@ -1,10 +1,10 @@
 # BuddyBills
 
-A modern, fast group expense tracking application. BuddyBills handles complex group balances, calculates exact splits, and tracks who owes what without friction.
+A group expense tracking application. BuddyBills calculates splits and tracks group balances.
 
-This is a complete architectural rewrite of the original 2024 V1, migrating from a split Next.js/NestJS monolith to a unified, serverless edge infrastructure.
+This replaces the 2024 V1 Next.js and NestJS monolith with a Next.js serverless app.
 
-## 🚀 Tech Stack
+## Tech stack
 
 - **Framework:** Next.js (App Router + Server Actions)
 - **Database:** PostgreSQL (Hosted on Neon)
@@ -13,16 +13,16 @@ This is a complete architectural rewrite of the original 2024 V1, migrating from
 - **Styling:** Tailwind CSS v4 + shadcn/ui
 - **Package Manager:** Bun
 
-## ✨ Core Features
+## Core features
 
-- **OAuth Authentication:** Secure, password-less login via Google.
-- **Group Management:** Create groups and manage members seamlessly.
-- **Complex Math Engine:** Supports uneven splits (equal, exact, percentage, and shares).
-- **Automated Ledger:** Calculates the most efficient repayment paths to settle debts.
+- **OAuth authentication.** Login via Google.
+- **Group management.** Create groups and manage members.
+- **Split options.** Split bills by equal amounts, exact amounts, percentages, or shares.
+- **Debt simplification.** Calculates the fewest number of transactions needed to settle debts.
 
-## 🛠 Local Development
+## Local development
 
-This project uses [Bun](https://bun.sh/) for ultra-fast dependency management and execution.
+This project uses [Bun](https://bun.sh/) for dependency management and execution.
 
 ### 1. Clone the repository
 
