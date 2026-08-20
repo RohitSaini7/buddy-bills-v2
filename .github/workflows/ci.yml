@@ -9,6 +9,22 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: "postgresql://user:password@localhost:5432/buddybills_test"
+      IS_TEST_DB: "true"
+      BETTER_AUTH_SECRET: "test-secret"
+      BETTER_AUTH_URL: "http://localhost:3000"
+      RESEND_API_KEY: "re_test123456789"
+      GOOGLE_CLIENT_ID: "test-google-client-id"
+      GOOGLE_CLIENT_SECRET: "test-google-client-secret"
+      UPSTASH_REDIS_REST_URL: "https://test.upstash.io"
+      UPSTASH_REDIS_REST_TOKEN: "test-upstash-token"
+      SMTP_EMAIL: "test@example.com"
+      SMTP_PASSWORD: "test-smtp-password"
+      PUSHER_APP_ID: "test-pusher-app-id"
+      PUSHER_KEY: "test-pusher-key"
+      PUSHER_SECRET: "test-pusher-secret"
+      PUSHER_CLUSTER: "ap2"
 
     services:
       postgres:
@@ -46,11 +62,6 @@ jobs:
         run: bun run build
 
       - name: Run Unit & Server Action Tests
-        env:
-          DATABASE_URL: "postgresql://user:password@localhost:5432/buddybills_test"
-          IS_TEST_DB: "true"
-          BETTER_AUTH_SECRET: "test-secret"
-          BETTER_AUTH_URL: "http://localhost:3000"
         run: |
           bunx drizzle-kit push
           bun test src
@@ -59,9 +70,4 @@ jobs:
         run: bunx playwright install --with-deps
 
       - name: Run E2E Tests
-        env:
-          DATABASE_URL: "postgresql://user:password@localhost:5432/buddybills_test"
-          IS_TEST_DB: "true"
-          BETTER_AUTH_SECRET: "test-secret"
-          BETTER_AUTH_URL: "http://localhost:3000"
         run: bunx playwright test
