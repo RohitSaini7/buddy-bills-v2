@@ -53,7 +53,7 @@ jobs:
           BETTER_AUTH_URL: "http://localhost:3000"
         run: |
           bunx drizzle-kit push
-          bun test
+          bun test src
 
       - name: Install Playwright Browsers
         run: bunx playwright install --with-deps
