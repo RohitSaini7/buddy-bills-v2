@@ -1,10 +1,5 @@
-/** Threshold in minor units below which a balance is considered zero. */
 export const EPSILON_MINOR_UNITS = 1;
 
-/**
- * Convert a decimal string (e.g. "123.45") to integer minor units (12345).
- * Handles missing or malformed input gracefully.
- */
 export function toMinorUnits(decimalStr: string | number): number {
   if (!decimalStr) return 0;
 
@@ -14,9 +9,6 @@ export function toMinorUnits(decimalStr: string | number): number {
   return Math.round((parsed + Number.EPSILON) * 100);
 }
 
-/**
- * Convert integer minor units (12345) to a display string ("123.45").
- */
 export function minorUnitsToDisplay(minorUnits: number): string {
   const negative = minorUnits < 0;
   const abs = Math.abs(minorUnits);
@@ -36,9 +28,6 @@ export const CURRENCIES = [
   { code: "AUD", symbol: "A$" },
 ];
 
-/**
- * Get display symbol for a currency code.
- */
 export function getCurrencySymbol(currencyCode?: string): string {
   switch (currencyCode?.toUpperCase()) {
     case "USD":

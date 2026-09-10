@@ -21,7 +21,6 @@ export const expenseInputSchema = z.object({
   currency: z.string().optional(),
 });
 
-// Form Schemas for react-hook-form
 export const createGroupFormSchema = z.object({
   name: z
     .string()

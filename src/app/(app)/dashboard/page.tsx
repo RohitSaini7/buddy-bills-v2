@@ -26,7 +26,6 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
       <InviteAcceptToast />
-      {/* Welcome Hero Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 bg-card border border-border rounded-2xl shadow-sm">
         <div className="space-y-1">
           <Badge variant="secondary" className="bg-primary/10 text-primary border-transparent">
@@ -51,7 +50,6 @@ export default async function DashboardPage() {
         currencyCode={user.defaultCurrency as string | undefined}
       />
 
-      {/* Groups Section */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
@@ -65,7 +63,6 @@ export default async function DashboardPage() {
         </div>
 
         {userGroups.length === 0 ? (
-          /* Empty State */
           <div className="bg-card/30 border border-border border-dashed rounded-2xl p-12 text-center flex flex-col items-center justify-center space-y-4 min-h-70">
             <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
               <Users className="w-6 h-6" />
@@ -79,7 +76,6 @@ export default async function DashboardPage() {
             <CreateGroupDialog defaultCurrency={user.defaultCurrency} />
           </div>
         ) : (
-          /* Groups Grid */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {userGroups.map((group) => (
               <GroupCard key={group.id} group={group} />

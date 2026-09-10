@@ -21,7 +21,6 @@ const mockSession = {
   userAgent: null,
 };
 
-// Expose a way to change the mock user in tests
 export function setMockUser(user: Partial<typeof mockUser>) {
   mockUser = { ...mockUser, ...user };
   mockSession.userId = mockUser.id;
@@ -35,7 +34,6 @@ mock.module("@/lib/auth", () => {
   };
 });
 
-// Also mock next/cache's revalidatePath since it fails outside Next.js router context
 mock.module("next/cache", () => {
   return {
     revalidatePath: () => {},

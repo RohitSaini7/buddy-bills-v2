@@ -1,7 +1,5 @@
 import Pusher from "pusher";
 
-// Note: In development/tests, these env vars might not be present.
-// We handle that by safely falling back or failing gracefully when attempting to trigger.
 export const pusherServer =
   process.env.PUSHER_APP_ID &&
   process.env.NEXT_PUBLIC_PUSHER_KEY &&

@@ -1,7 +1,6 @@
 import { describe, test, expect } from "bun:test";
 import { calculatePairwiseDebts, simplifyDebts } from "./debt-simplifier";
 
-// Mock Data
 const members = [
   { id: "alice", name: "Alice" },
   { id: "bob", name: "Bob" },

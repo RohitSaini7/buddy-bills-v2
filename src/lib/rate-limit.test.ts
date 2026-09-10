@@ -2,10 +2,7 @@ import { expect, test, describe, beforeEach } from "bun:test";
 import { RateLimiter } from "./rate-limit";
 
 describe("RateLimiter", () => {
-  beforeEach(() => {
-    // Clear global cache if needed, but since it's a sliding window based on time,
-    // we can just use unique keys per test.
-  });
+  beforeEach(() => {});
 
   test("allows requests under the limit", async () => {
     const key = `test_under_${Date.now()}`;
@@ -33,7 +30,6 @@ describe("RateLimiter", () => {
     await RateLimiter.check(key, limit, windowMs);
     await RateLimiter.check(key, limit, windowMs);
 
-    // 3rd request should fail
     const res3 = await RateLimiter.check(key, limit, windowMs);
     expect(res3.success).toBe(false);
     expect(res3.remaining).toBe(0);

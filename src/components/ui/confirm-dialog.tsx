@@ -17,10 +17,6 @@ interface ConfirmDialogProps {
   isLoading?: boolean;
 }
 
-/**
- * Issue #13: Custom confirmation dialog replacing window.confirm/alert.
- * Uses Radix Dialog for accessibility, consistency, and non-blocking behavior.
- */
 export function ConfirmDialog({
   open,
   onOpenChange,

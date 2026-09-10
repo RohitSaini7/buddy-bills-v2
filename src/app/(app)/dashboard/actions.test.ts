@@ -29,7 +29,6 @@ describe("Dashboard Server Actions", () => {
       expect(result.group.currency).toBe("USD");
       expect(result.group.createdByUserId).toBe(creator.id);
 
-      // Verify they are a member
       const members = await db
         .select()
         .from(groupMembers)

@@ -47,10 +47,9 @@ export async function sendGroupInviteEmail({
       })
     );
 
-    // Try Resend First
     if (process.env.RESEND_API_KEY) {
       const { data, error } = await resend.emails.send({
-        from: "BuddyBills <onboarding@resend.dev>", // Change to a verified domain in production
+        from: "BuddyBills <onboarding@resend.dev>",
         to: [to],
         subject,
         html,
@@ -62,7 +61,6 @@ export async function sendGroupInviteEmail({
       console.warn("Resend failed, attempting fallback to Nodemailer:", error);
     }
 
-    // Fallback to Nodemailer
     if (nodemailerTransporter) {
       const info = await nodemailerTransporter.sendMail({
         from: `"BuddyBills" <${process.env.SMTP_EMAIL}>`,

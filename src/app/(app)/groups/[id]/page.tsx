@@ -38,7 +38,6 @@ export default async function GroupDetailPage(props: PageProps) {
     notFound();
   }
 
-  // Pagination params
   const page = typeof searchParams.page === "string" ? parseInt(searchParams.page, 10) : 1;
   const limit = 50;
   const offset = (page - 1) * limit;
@@ -106,7 +105,7 @@ export default async function GroupDetailPage(props: PageProps) {
       .innerJoin(users, eq(expenses.paidByUserId, users.id))
       .where(and(eq(expenses.groupId, id), isNull(expenses.deletedAt)))
       .orderBy(sql`${expenses.transactionDate} desc, ${expenses.createdAt} desc`)
-      .limit(limit + 1) // Request 1 extra to see if there is a next page
+      .limit(limit + 1)
       .offset(offset),
 
     db
@@ -130,7 +129,7 @@ export default async function GroupDetailPage(props: PageProps) {
 
   const hasNextPage = expensesList.length > limit;
   if (hasNextPage) {
-    expensesList.pop(); // Remove the extra item
+    expensesList.pop();
   }
 
   const splitsList =
@@ -158,9 +157,6 @@ export default async function GroupDetailPage(props: PageProps) {
           )
       : [];
 
-  // paymentsList is already fetched above
-
-  // Build Activity Feed
   type Activity = {
     id: string;
     type: "expense" | "payment" | "join";
@@ -204,10 +200,8 @@ export default async function GroupDetailPage(props: PageProps) {
     });
   });
 
-  // Sort descending by timestamp
   activities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-  // Fetch all expenses and splits for correct balance calculations
   const allExpenses = await db
     .select({
       id: expenses.id,

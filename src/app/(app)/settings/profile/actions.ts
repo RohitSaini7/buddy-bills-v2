@@ -13,7 +13,6 @@ export async function unlinkProviderAction(providerId: string) {
     return { error: "Unauthorized" };
   }
 
-  // Check how many accounts the user has
   const userAccounts = await db.select().from(accounts).where(eq(accounts.userId, session.user.id));
 
   if (userAccounts.length <= 1) {

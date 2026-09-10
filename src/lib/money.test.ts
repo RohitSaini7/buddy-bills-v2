@@ -16,7 +16,7 @@ describe("Money Utilities", () => {
     test("handles edge cases and floating point issues", () => {
       expect(toMinorUnits("0.1")).toBe(10);
       expect(toMinorUnits("0.01")).toBe(1);
-      expect(toMinorUnits(0.1 + 0.2)).toBe(30); // 0.30000000000000004 -> 30
+      expect(toMinorUnits(0.1 + 0.2)).toBe(30);
     });
 
     test("handles zero and empty strings", () => {

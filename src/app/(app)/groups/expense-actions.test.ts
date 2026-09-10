@@ -71,7 +71,7 @@ describe("Expense Server Actions", () => {
         transactionDate: new Date().toISOString().split("T")[0],
         splitType: "EQUAL",
         splits: [
-          { userId: creator.id, amount: 500 }, // sum is 1500, not 2000
+          { userId: creator.id, amount: 500 },
           { userId: friend.id, amount: 1000 },
         ],
       });

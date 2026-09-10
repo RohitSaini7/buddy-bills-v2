@@ -146,7 +146,6 @@ export function DashboardSidebar({
             onCloseMobileSidebar={() => setMobileOpen(false)}
           />
 
-          {/* Collapse/Expand toggle button (only in desktop mode) */}
           {!forceOpen && (
             <Button
               type="button"

@@ -23,7 +23,6 @@ export const addExpenseAction = withGroupAuth(
   }
   const data = parseResult.data;
 
-  // IDOR check: paidByUserId must be session user or session user must be group creator
   if (data.paidByUserId !== session.user.id && group.createdByUserId !== session.user.id) {
     return { error: "Only the group creator can add an expense on behalf of someone else." };
   }
@@ -235,7 +234,6 @@ export const addPaymentAction = withGroupAuth(
   }
 });
 
-// Skipping wrapper since it doesn't receive groupId directly from args and requires fetching expense first.
 export async function deleteExpenseAction(expenseId: string) {
   const session = await getCachedSession();
   if (!session) return { error: "Unauthorized" };
@@ -291,7 +289,6 @@ export async function deleteExpenseAction(expenseId: string) {
   }
 }
 
-// Skipping wrapper since it doesn't receive groupId directly from args and requires fetching payment first.
 export async function deletePaymentAction(paymentId: string) {
   const session = await getCachedSession();
   if (!session) return { error: "Unauthorized" };

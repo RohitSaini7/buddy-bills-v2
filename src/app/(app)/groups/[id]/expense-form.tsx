@@ -51,7 +51,6 @@ export function ExpenseForm({
   isLoading,
   errorMsg,
 }: ExpenseFormProps) {
-  // Prepare default values
   const defaultSplits =
     initialData?.splits ||
     members.map((m) => ({
@@ -83,7 +82,6 @@ export function ExpenseForm({
     name: "splits",
   });
 
-  // Watch values for dynamic UI rendering
   const amountStr = useWatch({ control, name: "amount" });
   const splitType = useWatch({ control, name: "splitType" });
   const splitsData = useWatch({ control, name: "splits" }) || [];
@@ -96,7 +94,6 @@ export function ExpenseForm({
       ? minorUnitsToDisplay(Math.floor(totalMinorUnits / selectedSplits.length))
       : "0.00";
 
-  // Derive root level splits error (from superRefine)
   const splitsError =
     errors.splits?.root?.message || (errors.splits as unknown as { message?: string })?.message;
 

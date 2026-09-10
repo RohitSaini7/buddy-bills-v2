@@ -56,7 +56,6 @@ export function ProfileClient({
       const { error } = await authClient.deleteUser();
       if (error) throw new Error(error.message);
 
-      // authClient.deleteUser automatically signs the user out, but let's be safe
       window.location.href = "/";
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Failed to delete account");

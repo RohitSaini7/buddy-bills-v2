@@ -20,12 +20,6 @@ interface PaymentData {
   amount: number;
 }
 
-/**
- * Calculate net balances across multiple groups for a given user.
- * Used in sidebar and dashboard to compute "you owe" / "owed to you" totals.
- *
- * @returns `{ totalYouOweMinorUnits, totalOwedToYouMinorUnits }` — both non-negative integers.
- */
 export function calculateNetBalances(
   userId: string,
   groupIds: string[],
@@ -88,12 +82,6 @@ interface MemberData {
   id: string;
 }
 
-/**
- * Calculate per-member net balance within a single group.
- * Positive = owed money (creditor), negative = owes money (debtor).
- *
- * Used on the group detail page to display each member's balance.
- */
 export function calculateMemberBalances(
   members: MemberData[],
   expenses: { paidByUserId: string; amount: number }[],

@@ -60,7 +60,6 @@ export function SettlementHistory({
                       {new Intl.DateTimeFormat("en-IN", {
                         day: "numeric",
                         month: "short",
-                        // Issue #18: Append T00:00:00 to date-only strings
                       }).format(new Date(pmt.paymentDate + "T00:00:00"))}
                     </span>
                     {(pmt.paidByUserId === currentUser.id ||

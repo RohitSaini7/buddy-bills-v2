@@ -69,7 +69,7 @@ describe("Balance Utilities", () => {
       const members = [{ id: "user1" }];
       const expenses = [{ paidByUserId: "user1", amount: 1000 }];
       const splits = [{ owedByUserId: "user2", amount: 1000 }];
-      const payments = [];
+      const payments: [] = [];
 
       const result = calculateMemberBalances(members, expenses, splits, payments);
 

@@ -6,11 +6,6 @@ export interface DebtsPath {
   amountMinorUnits: number;
 }
 
-/**
- * Computes raw peer-to-peer balance matrices.
- * Shows who owes whom directly based on expenses and split records,
- * and subtracts direct payments made between users.
- */
 export function calculatePairwiseDebts(
   members: { id: string; name: string }[],
   expenses: { id: string; paidByUserId: string; amount: number }[],
@@ -19,10 +14,8 @@ export function calculatePairwiseDebts(
 ): DebtsPath[] {
   const memberMap = new Map(members.map((m) => [m.id, m.name]));
 
-  // Matrix representing how much i owes j in minor units
   const matrix: Record<string, Record<string, number>> = {};
 
-  // Initialize matrix
   members.forEach((m1) => {
     matrix[m1.id] = {};
     members.forEach((m2) => {
@@ -30,7 +23,6 @@ export function calculatePairwiseDebts(
     });
   });
 
-  // 1. Process expenses and splits
   const expenseMap = new Map(expenses.map((e) => [e.id, e]));
 
   splits.forEach((split) => {
@@ -38,14 +30,13 @@ export function calculatePairwiseDebts(
     if (!expense) return;
     const P = expense.paidByUserId;
     const O = split.owedByUserId;
-    if (P === O) return; // You don't owe yourself
+    if (P === O) return;
 
     if (matrix[O] && matrix[O][P] !== undefined) {
       matrix[O][P] += split.amount;
     }
   });
 
-  // 2. Process payments (settle-ups)
   payments.forEach((pmt) => {
     const A = pmt.paidByUserId;
     const B = pmt.paidToUserId;
@@ -56,7 +47,6 @@ export function calculatePairwiseDebts(
     }
   });
 
-  // 3. Net out mutual debts between all pairs
   const result: DebtsPath[] = [];
   const processedPairs = new Set<string>();
 
@@ -94,10 +84,6 @@ export function calculatePairwiseDebts(
   return result;
 }
 
-/**
- * Computes simplified transactions using the greedy Net Flow reduction algorithm.
- * Settle-up matches debtor-creditor balances to minimize transaction count.
- */
 export function simplifyDebts(
   members: { id: string; name: string }[],
   expenses: { id: string; paidByUserId: string; amount: number }[],
@@ -111,14 +97,12 @@ export function simplifyDebts(
     balances[m.id] = 0;
   });
 
-  // 1. Add paid expenses
   expenses.forEach((e) => {
     if (balances[e.paidByUserId] !== undefined) {
       balances[e.paidByUserId] += e.amount;
     }
   });
 
-  // 2. Subtract splits
   const expenseIds = new Set(expenses.map((e) => e.id));
   splits.forEach((s) => {
     if (expenseIds.has(s.expenseId) && balances[s.owedByUserId] !== undefined) {
@@ -126,7 +110,6 @@ export function simplifyDebts(
     }
   });
 
-  // 3. Process payments
   payments.forEach((p) => {
     if (balances[p.paidByUserId] !== undefined) {
       balances[p.paidByUserId] += p.amount;
@@ -136,7 +119,6 @@ export function simplifyDebts(
     }
   });
 
-  // 4. Group into debtors and creditors
   const debtors: { id: string; amount: number }[] = [];
   const creditors: { id: string; amount: number }[] = [];
 
@@ -149,7 +131,6 @@ export function simplifyDebts(
     }
   });
 
-  // Sort descending to settle largest amounts first (greedy algorithm)
   debtors.sort((a, b) => b.amount - a.amount);
   creditors.sort((a, b) => b.amount - a.amount);
 

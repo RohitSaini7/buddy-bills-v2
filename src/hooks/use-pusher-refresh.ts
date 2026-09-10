@@ -9,13 +9,9 @@ export function usePusherRefresh(groupId: string) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    // Only initialize if keys are present
     if (!process.env.NEXT_PUBLIC_PUSHER_KEY || !process.env.NEXT_PUBLIC_PUSHER_CLUSTER) {
       return;
     }
-
-    // Enable pusher logging in dev only
-    // Pusher.logToConsole = process.env.NODE_ENV === "development";
 
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
@@ -27,8 +23,6 @@ export function usePusherRefresh(groupId: string) {
     const channel = pusher.subscribe(`group-${groupId}`);
 
     channel.bind("update", () => {
-      // When we receive an update event, silently refresh the server components
-      // This will refetch the latest DB data without blowing away client state
       router.refresh();
     });
 

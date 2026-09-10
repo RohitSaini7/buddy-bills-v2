@@ -94,7 +94,6 @@ export function SettleUpDialog({
   const handlePayerChange = (newPayerId: string) => {
     setValue("paidByUserId", newPayerId);
 
-    // Auto-switch recipient if they selected the same person
     const currentReceiverId = getValues("paidToUserId");
     if (newPayerId === currentReceiverId) {
       const alternateReceiver = members.find((m) => m.id !== newPayerId)?.id || "";

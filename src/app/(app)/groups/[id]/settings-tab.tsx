@@ -70,7 +70,7 @@ export function SettingsTab({
       if (res && "error" in res && res.error) throw new Error(res.error);
       toast.success(checked ? "Debt simplification enabled" : "Debt simplification disabled");
     } catch (err: unknown) {
-      setSimplifyDebts(!checked); // Revert
+      setSimplifyDebts(checked);
       toast.error(err instanceof Error ? err.message : "Failed to change setting");
     } finally {
       setIsTogglingSimplify(false);

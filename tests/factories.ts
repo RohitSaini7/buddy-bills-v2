@@ -63,7 +63,6 @@ export async function clearTestDb() {
     );
   }
 
-  // Since we have cascading deletes, we can just delete groups and users.
   await db.delete(groups);
   await db.delete(users);
 }

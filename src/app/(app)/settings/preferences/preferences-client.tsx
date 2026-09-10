@@ -45,17 +45,10 @@ export function PreferencesClient({
 
   const handleSidebarToggle = (checked: boolean) => {
     setSidebarCollapsed(checked);
-    // Update cookie and local storage
+
     localStorage.setItem("sidebar-collapsed", String(checked));
     document.cookie = `sidebar-collapsed=${checked}; path=/; max-age=${60 * 60 * 24 * 365}`;
 
-    // Dispatch event to force sidebar to re-read or we can just let it reload
-    // For now, this requires a refresh to take effect globally if we don't use React context,
-    // but our sidebar reads it from state in its own layout.
-    // Since sidebar in AppLayout is a server component wrapper that passes initialCollapsed,
-    // reloading the page or letting the sidebar's local state handle it is tricky.
-    // Actually the sidebar itself updates this cookie when toggled!
-    // So this is just a secondary way to change it. We can tell the user it takes effect on reload.
     toast.info("Sidebar preference saved. Refresh to see changes.");
   };
 

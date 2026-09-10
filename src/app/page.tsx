@@ -2,12 +2,15 @@ import React from "react";
 import { Coins } from "lucide-react";
 import { SignInButton, HeaderSignInButton } from "./sign-in-button";
 import { SplitDemo } from "./split-demo";
+import { getCachedSession } from "@lib/auth";
+import { redirect } from "next/navigation";
 
-/**
- * Issue #8: Landing page converted to server component for SEO and faster initial render.
- * Only the interactive demo and sign-in buttons are client components.
- */
-export default function LandingPage() {
+export default async function LandingPage() {
+  const session = await getCachedSession();
+  if (session) {
+    redirect("/dashboard");
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -26,7 +29,6 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Navigation Header */}
       <header className="w-full border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 font-bold text-lg tracking-tight">

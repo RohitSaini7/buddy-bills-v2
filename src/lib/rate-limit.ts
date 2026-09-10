@@ -18,11 +18,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 if (!globalForRateLimit.cleanupInterval) {
-  // Clean up cache every 5 minutes to prevent memory leaks
   globalForRateLimit.cleanupInterval = setInterval(() => {
     const now = Date.now();
     for (const [key, timestamps] of cache.entries()) {
-      // Remove timestamps older than 1 hour
       const valid = timestamps.filter((t) => now - t < 3600000);
       if (valid.length === 0) {
         cache.delete(key);
@@ -32,11 +30,9 @@ if (!globalForRateLimit.cleanupInterval) {
     }
   }, 300000);
 
-  // Prevent the interval from keeping the process alive
   globalForRateLimit.cleanupInterval.unref?.();
 }
 
-// Resilient Redis Initialization
 let redisClient: Redis | null = null;
 let isRedisFallback = false;
 
@@ -53,16 +49,10 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 }
 
 export class RateLimiter {
-  /**
-   * Check if a key is rate limited.
-   * Uses Redis sliding window log with unique member IDs.
-   * Automatically degrades to local in-memory log if Redis fails.
-   */
   static async check(key: string, limit: number, windowMs: number): Promise<RateLimitResult> {
     const now = Date.now();
     const windowStart = now - windowMs;
 
-    // 1. Attempt Redis Rate Limiter
     if (redisClient && !isRedisFallback) {
       try {
         const redisKey = `ratelimit:${key}`;
@@ -78,7 +68,6 @@ export class RateLimiter {
         const currentRequests = results[2] as number;
 
         if (currentRequests > limit) {
-          // Fetch oldest entry score to calculate accurate reset time
           const oldestRecords = await redisClient.zrange(redisKey, 0, 0, { withScores: true });
           const oldest = oldestRecords.length > 1 ? Number(oldestRecords[1]) : now;
           const reset = oldest + windowMs;
@@ -99,11 +88,9 @@ export class RateLimiter {
         };
       } catch (e) {
         console.error("Redis rate limit check failed. Falling back to memory.", e);
-        // Do not throw. Continue executing to fall back gracefully.
       }
     }
 
-    // 2. Local In-Memory Fallback
     let timestamps = cache.get(key) || [];
     timestamps = timestamps.filter((t) => t > windowStart);
 

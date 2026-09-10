@@ -14,6 +14,7 @@ const nextConfig = (phase: string): NextConfig => {
 
   return {
     async headers() {
+      if (isDev) return [];
       return [
         {
           source: "/(.*)",

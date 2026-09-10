@@ -49,10 +49,9 @@ export function ExpensesTab({
   const [localExpenses, setLocalExpenses] = useState<Expense[]>(expenses);
   const [localSplits, setLocalSplits] = useState<Split[]>(splits);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(expenses.length >= 50); // assume 50 is limit
+  const [hasMore, setHasMore] = useState(expenses.length >= 50);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // Sync props on revalidatePath
   useEffect(() => {
     if (sortBy === "date_desc" && page === 1) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -61,7 +60,6 @@ export function ExpensesTab({
     }
   }, [expenses, splits, sortBy, page]);
 
-  // Handle Sort Change
   const handleSortChange = async (newSort: SortType) => {
     setSortBy(newSort);
     setPage(1);
@@ -94,7 +92,6 @@ export function ExpensesTab({
     };
   }, []);
 
-  // Intersection Observer for Infinite Scroll
   const observerRef = useRef<IntersectionObserver | null>(null);
   const lastExpenseElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -152,7 +149,6 @@ export function ExpensesTab({
       </div>
 
       {localExpenses.length === 0 && !isLoadingMore ? (
-        /* Empty state placeholder */
         <div className="bg-card border border-border border-dashed rounded-2xl p-12 text-center flex flex-col items-center justify-center space-y-4 min-h-75">
           <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
             <ReceiptText className="w-6 h-6" />
@@ -165,7 +161,6 @@ export function ExpensesTab({
           </div>
         </div>
       ) : (
-        /* Chronological Feed List */
         <div className="space-y-3">
           {localExpenses.map((expense, index) => {
             const isExpanded = expandedExpenseId === expense.id;
@@ -201,7 +196,6 @@ export function ExpensesTab({
                             day: "numeric",
                             month: "short",
                             year: "numeric",
-                            // Issue #18: Append T00:00:00 to date-only strings to avoid timezone-shifted parsing
                           }).format(new Date(expense.transactionDate + "T00:00:00"))}
                         </span>
                       </p>
@@ -305,7 +299,6 @@ export function ExpensesTab({
             </div>
           )}
 
-          {/* Static Pagination Controls */}
           <div className="flex items-center justify-between pt-4 border-t border-border mt-4">
             {serverPage > 1 ? (
               <Link

@@ -105,7 +105,6 @@ export function GroupDetailsClient({
 
   return (
     <div className="space-y-6">
-      {/* Issue #13: Custom confirmation dialog */}
       <ConfirmDialog
         open={confirmDialog.open}
         onOpenChange={(open) => setConfirmDialog((prev) => ({ ...prev, open }))}
@@ -117,7 +116,6 @@ export function GroupDetailsClient({
         isLoading={confirmDialog.isLoading}
       />
 
-      {/* Issue #13: Action error display (replaces window.alert) */}
       {actionError && (
         <div className="flex items-start gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-xs">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />

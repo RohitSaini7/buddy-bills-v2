@@ -22,7 +22,6 @@ export async function getGroupExpensesAction(
     return { error: "Invalid group ID" };
   }
 
-  // Check membership
   const [membership] = await db
     .select()
     .from(groupMembers)
